@@ -1,3 +1,3 @@
-from nola_slackbots.python_bot import python_rtm
+from nola_slackbots.bash_bot import bash_rtm
 
-python_rtm.start()
+bash_rtm.start()

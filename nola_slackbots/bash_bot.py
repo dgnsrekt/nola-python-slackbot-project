@@ -1,5 +1,5 @@
 from decouple import config
-from bot import bot_creater
+from .bot import bot_creater
 
 TOKEN = config("BASH_BOT_USER_OAUTH_ACCESS_TOKEN")
 BOT_CHANNEL_ID = config("BASH_BOT_CHANNEL")
