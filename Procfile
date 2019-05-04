@@ -1,1 +1,1 @@
-worker: ./run.sh
+worker: /bin/sh run.sh
