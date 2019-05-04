@@ -4,14 +4,17 @@ from keywords import PYTHON_COMMON_KEYWORDS, PYTHON_KEYWORDS
 
 
 def remove_puctuation(text):
+    """Removes all punctuation."""
     return text.translate(str.maketrans("", "", string.punctuation))
 
 
 def replace_spaces(text):
+    """Removes spaces."""
     return text.replace(" ", "+")
 
 
 def clean_text(text):
+    """Cleans text for making requests"""
     text = remove_puctuation(text)
     text = replace_spaces(text)
     return text.lower()
