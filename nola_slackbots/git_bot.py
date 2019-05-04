@@ -1,5 +1,5 @@
 from decouple import config
-from bot import bot_creater
+from .bot import bot_creater
 
 TOKEN = config("GIT_BOT_USER_OAUTH_ACCESS_TOKEN")
 BOT_CHANNEL_ID = config("GIT_BOT_CHANNEL")
@@ -14,5 +14,3 @@ git_rtm = bot_creater(
     song_name=SONG,
     title_line_number=TITLE_LINE_NUMBER,
 )
-
-git_rtm.start()
