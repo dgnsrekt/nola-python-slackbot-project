@@ -14,4 +14,5 @@ git_rtm = bot_creater(
     song_name=SONG,
     title_line_number=TITLE_LINE_NUMBER,
 )
+
 git_rtm.start()
