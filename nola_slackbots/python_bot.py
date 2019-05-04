@@ -1,5 +1,5 @@
 from decouple import config
-from bot import bot_creater
+from .bot import bot_creater
 
 TOKEN = config("PYTHON_BOT_USER_OAUTH_ACCESS_TOKEN")
 BOT_CHANNEL_ID = config("PYTHON_BOT_CHANNEL")
@@ -14,5 +14,3 @@ python_rtm = bot_creater(
     song_name=SONG,
     title_line_number=TITLE_LINE_NUMBER,
 )
-
-python_rtm.start()

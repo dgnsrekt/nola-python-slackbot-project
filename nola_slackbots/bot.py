@@ -1,6 +1,6 @@
 from datetime import datetime
 from time import time, sleep
-import api
+from . import api
 
 import slack
 

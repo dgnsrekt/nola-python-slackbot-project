@@ -1,6 +1,6 @@
 import string
 from requests_html import HTMLSession
-from keywords import PYTHON_COMMON_KEYWORDS, PYTHON_KEYWORDS
+from .keywords import PYTHON_COMMON_KEYWORDS, PYTHON_KEYWORDS
 
 
 def remove_puctuation(text):
