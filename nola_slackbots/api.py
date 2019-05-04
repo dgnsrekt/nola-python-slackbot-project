@@ -73,7 +73,7 @@ def git_question(subtopic):
 
 def answer_question(system, subtopic):
     systems = {"python": python_question, "git": git_question, "bash": bash_question}
-    return systems[system]()
+    return systems[system](subtopic)
 
 
 def parse_response(resp, title_line_number=1, max_characters=1500):
