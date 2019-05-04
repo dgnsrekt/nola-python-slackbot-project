@@ -23,7 +23,7 @@ def payload_parser(payload):
     return web_client, rtm_client, channel, user, text
 
 
-def bot_creater(*, token, bot_channel_id, bot_display_name, song_name, title_line_number):
+def bot_creater(*, token, bot_channel_id, bot_display_name, system, title_line_number):
     @slack.RTMClient.run_on(event="message")
     def ping(**payload):
         start = time()
@@ -38,14 +38,14 @@ def bot_creater(*, token, bot_channel_id, bot_display_name, song_name, title_lin
                     web_client.chat_postMessage(channel=channel, blocks=message_block)
 
                 elif "sing" in text:
-                    song = api.song(song_name)
+                    song = api.song(system)
                     for line in song:
                         sleep(0.5)
                         if line:
                             web_client.chat_postMessage(channel=channel, text=line)
 
                 else:
-                    response = api.bash_question(text)
+                    response = api.answer_question(system, text)
                     title, messages = api.parse_response(
                         response, title_line_number=title_line_number, max_characters=2000
                     )
