@@ -115,8 +115,7 @@ def parse_response(resp, title_line_number=1, max_characters=1500):
                 messages.append(chunks)
                 chunks = str()
 
-    else:
-        messages.append(chunks)
+    messages.append(chunks)
 
     return title, messages
 
