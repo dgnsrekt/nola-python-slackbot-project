@@ -1,5 +1,5 @@
 from decouple import config
-from .bot import bot_creater
+from nola_slackbots.bot import bot_creater
 
 TOKEN = config("OAUTH_ACCESS_TOKEN")
 BOT_CHANNEL_ID = config("BOT_CHANNEL")
