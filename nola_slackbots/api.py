@@ -60,7 +60,7 @@ def prepare_request(topic, subtopic, keywords=None):
     return f"{url}/{topic}/{subtopic}"
 
 
-def prepare_reformatted_request(topic, subtopic):
+def prepare_reformatted_request(topic, subtopic):  # TODO: rename to raw request
     """Prepares the url with raw arguments.
 
     Args:
@@ -73,7 +73,7 @@ def prepare_reformatted_request(topic, subtopic):
     return f"{url}/{topic}/{subtopic}"
 
 
-def make_request(url):
+def make_request(url):  # TODO: rename get_request
     """Makes a http requests to the server.
 
     Args:
