@@ -2,18 +2,21 @@ from nola_slackbots.api import remove_puctuation, replace_spaces, clean_text
 
 
 def test_remove_puctuation():
-    pre_text = "What is a String?!@#$%^&*()_.~`{}[]:;<.>.?/|"
-    text = remove_puctuation(pre_text)
-    assert text == "What is a String"
+    t_before = "What is a String?!@#$%^&*()_.~`{}[]:;<.>.?/|"
+    t_after = remove_puctuation(t_before)
+    t_expected = "What is a String"
+    assert t_after == t_expected
 
 
 def test_replace_spaces():
-    pre_text = "What is a String?"
-    text = replace_spaces(pre_text)
-    assert text == "What+is+a+String?"
+    t_before = "What is a String?"
+    t_after = replace_spaces(t_before)
+    t_expected = "What+is+a+String?"
+    assert t_after == t_expected
 
 
 def test_clean_text():
-    pre_text = "What is a String?!@#$%^&*()_.~`{}[]:;<.>.?/|"
-    text = clean_text(pre_text)
-    assert text == "what+is+a+string"
+    t_before = "What is a String?!@#$%^&*()_.~`{}[]:;<.>.?/|"
+    t_after = clean_text(t_before)
+    t_expected = "what+is+a+string"
+    assert t_after == t_expected
