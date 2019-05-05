@@ -106,6 +106,7 @@ def parse_response(resp, title_line_number=1, max_characters=1500):
     def is_newline_character(char):
         if char == "\n":
             return True
+        return False
 
     for char in resp.full_text:
         chunks += char
