@@ -1,26 +1,58 @@
+"""Provides helper functions that clean, parse, and prepare text for making api requests."""
+
 import string
 from requests_html import HTMLSession
-from .keywords import PYTHON_COMMON_KEYWORDS, PYTHON_KEYWORDS
+from .keywords import PYTHON_KEYWORDS
 
 
 def remove_puctuation(text):
-    """Removes all punctuation."""
+    """Removes all punctuation from text.
+
+    Args:
+        text: A string to be formatted.
+    Returns:
+        A str with all punctuation removed.
+    """
     return text.translate(str.maketrans("", "", string.punctuation))
 
 
 def replace_spaces(text):
-    """Removes spaces."""
+    """Replaces all spaces with + for a properly formatted request.
+
+    Args:
+        text: A string to be formatted.
+    Returns:
+        str with spaces replaced with +.
+    """
     return text.replace(" ", "+")
 
 
 def clean_text(text):
-    """Cleans text for making requests"""
+    """Cleans text for properly formatted requests
+    Removes punctuation, replaces spaces, and lowers the text
+
+    Args:
+        text: A string to be formatted.
+    Returns:
+        str clean text
+    """
     text = remove_puctuation(text)
     text = replace_spaces(text)
     return text.lower()
 
 
 def prepare_request(topic, subtopic, keywords=None):
+    """Prepares the url by appending the topic and subtopic.
+    Cleans text then checks if a dictionary of keywords were provided.
+
+    Args:
+        topic:str
+        subpic:str
+        keywords:{strings:strings}
+    returns:
+        str:url
+
+    """
     url = "http://cheat.sh"
     subtopic = clean_text(subtopic)
     if keywords:
@@ -85,6 +117,7 @@ def parse_response(resp, title_line_number=1, max_characters=1500):
     def is_newline_character(char):
         if char == "\n":
             return True
+        return False
 
     for char in resp.full_text:
         chunks += char
@@ -93,8 +126,7 @@ def parse_response(resp, title_line_number=1, max_characters=1500):
                 messages.append(chunks)
                 chunks = str()
 
-    else:
-        messages.append(chunks)
+    messages.append(chunks)
 
     return title, messages
 
@@ -107,7 +139,10 @@ def print_messages(title, messages):
 
 
 def python_song():
-    url = "https://gist.githubusercontent.com/dgnsrekt/03c49575c6c0b0aa49c84a1d70e9e735/raw/1236a06bc34f389c8d1bec6963ccdc0d470291b2/mr-python-song"
+    url = (
+        "https://gist.githubusercontent.com/dgnsrekt/03c49575c6c0b0aa49c84a1d70e9e735"
+        "/raw/1236a06bc34f389c8d1bec6963ccdc0d470291b2/mr-python-song"
+    )
     response = make_request(url)
     if response.status_code == 200:
         return response.html.full_text.split("\n")
@@ -115,7 +150,10 @@ def python_song():
 
 
 def git_song():
-    url = "https://gist.githubusercontent.com/dgnsrekt/3af28a1848c961c0a031287e9311f2b9/raw/ab5da67401b98ad8a713cb3680ccafdcef690e96/gitman-song"
+    url = (
+        "https://gist.githubusercontent.com/dgnsrekt/3af28a1848c961c0a031287e9311f2b9"
+        "/raw/ab5da67401b98ad8a713cb3680ccafdcef690e96/gitman-song"
+    )
     response = make_request(url)
     if response.status_code == 200:
         return response.html.full_text.split("\n")
@@ -123,7 +161,10 @@ def git_song():
 
 
 def bash_song():
-    url = "https://gist.githubusercontent.com/dgnsrekt/29c630b9a2069388f5e9b3378f74a8da/raw/a23a8c25f36c1f62b2dc4a0a70689030f7516311/unix-terminator"
+    url = (
+        "https://gist.githubusercontent.com/dgnsrekt/29c630b9a2069388f5e9b3378f74a8da"
+        "/raw/a23a8c25f36c1f62b2dc4a0a70689030f7516311/unix-terminator"
+    )
     response = make_request(url)
     if response.status_code == 200:
         return response.html.full_text.split("\n")

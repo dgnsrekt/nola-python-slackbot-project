@@ -298,11 +298,11 @@
         },
         "slackclient": {
             "hashes": [
-                "sha256:3f9da5b111b8c4944380674d193c3ffd5bd4a36cda8b58fb2404f900afb0b1fa",
-                "sha256:f439ad81b25734b459ddf799fd73c731d59fff806b51e7867b1eab25e2b71d0a"
+                "sha256:82cef9b4aa4180be440598807903f618f07aebc0f61afe3135b81870edb1b1ad",
+                "sha256:dccece1609fae52d23af5e9b7418c7b74a3a1040048cf8ffe416521a6f29b8a4"
             ],
             "index": "pypi",
-            "version": "==2.0.0"
+            "version": "==2.0.1"
         },
         "soupsieve": {
             "hashes": [
@@ -462,7 +462,6 @@
                 "sha256:6ae6c4cb59f199d8827c5a07546b2ab7e85d262acaccaacd49b62f53f7c456f7",
                 "sha256:7661d401d60d8bf15bb5da39e4dd72f5d764c5aff5a86ef52a042506e3e970ff",
                 "sha256:7bd527f36a605c914efca5d3d014170b2cb184723e423d26b1fb2fd9108e264d",
-                "sha256:7c08984484155edfea4b438b13c413bbe9785b5067b82c1217115060e5e3e250",
                 "sha256:7cb54db3535c8686ea12e9535eb087d32421184eacc6939ef15ef50f83a5e7e2",
                 "sha256:7f3a2d740291f7f2c111d86a1c4851b70fb000a6c8883a59660d95ad57b9df35",
                 "sha256:81304b7d8e9c824d058087dcb89144842c8e0dea6d281c031f59f0acf66963d4",
@@ -601,8 +600,7 @@
         },
         "wrapt": {
             "hashes": [
-                "sha256:4aea003270831cceb8a90ff27c4031da6ead7ec1886023b80ce0dfe0adf61533",
-                "sha256:efafa3cc356b12eeefdad6d1dd5a83951027e3d7642f3182117f50e98bd51674"
+                "sha256:4aea003270831cceb8a90ff27c4031da6ead7ec1886023b80ce0dfe0adf61533"
             ],
             "version": "==1.11.1"
         }
