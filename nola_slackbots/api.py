@@ -42,6 +42,17 @@ def clean_text(text):
 
 
 def prepare_request(topic, subtopic, keywords=None):
+    """Prepares the url by appending the topic and subtopic.
+    Cleans text then checks if a dictionary of keywords were provided.
+
+    Args:
+        topic:str
+        subpic:str
+        keywords:{strings:strings}
+    returns:
+        str:url
+
+    """
     url = "http://cheat.sh"
     subtopic = clean_text(subtopic)
     if keywords:
