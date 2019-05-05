@@ -133,20 +133,3 @@ def bash_song():
 def song(bot):
     songs = {"python": python_song, "git": git_song, "bash": bash_song}
     return songs[bot]()
-
-
-# print(git_song())
-# python_question("What is a class?")
-# q = python_question("functions")
-# t, m = parse_response(q)
-# print_messages(t, m)
-# python_question("comments")
-# python_question("loop")
-# python_question("loops")
-# python_question("What is a string?")
-# python_question("How do you reverse a string?")
-# python_question("How do you reverse a list?")
-# python_question("control flow")
-
-# print(bash_question("What is a tree?"))
-# print(git_question("What is a branch?"))
