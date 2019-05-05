@@ -23,10 +23,34 @@ def payload_parser(payload):
     return web_client, rtm_client, channel, user, text
 
 
+def check_bot_mentioned_in_text(bot_display_name_id, text):
+    if bot_display_name_id in text:
+        return True
+    return False
+
+
+def remove_bot_display_name_id_from_text(bot_display_name_id, text):
+    text = text.replace(bot_display_name_id, "")
+    return text
+
+
+def send_ping_message(web_client, channel, start_time=time()):
+    message_block = prep_message(title="PING TEST", message=f"pong, {time() - start_time}ms")
+    web_client.chat_postMessage(channel=channel, blocks=message_block)
+
+
+def send_song_response(web_client, channel, topic):
+    song = api.song(topic)
+    for line in song:
+        sleep(0.5)
+        if line:
+            web_client.chat_postMessage(channel=channel, text=line)
+
+
 def bot_creater(*, token, bot_channel_id, bot_display_name_id, topic, title_line_number):
     @slack.RTMClient.run_on(event="message")
     def respond(**payload):
-        start = time()
+        start_time = time()  # Used for ping test.
 
         web_client, rtm_client, channel, user, text = payload_parser(payload)
 
@@ -35,15 +59,17 @@ def bot_creater(*, token, bot_channel_id, bot_display_name_id, topic, title_line
                 text = text.replace(bot_display_name_id, "")
 
                 if "ping" in text:
-                    message_block = prep_message(title="pong", message=f"{time() - start}")
-                    web_client.chat_postMessage(channel=channel, blocks=message_block)
+                    send_ping_message(web_client, channel, start_time=start_time)
+                    # message_block = prep_message(title="pong", message=f"{time() - start}")
+                    # web_client.chat_postMessage(channel=channel, blocks=message_block)
 
                 elif "sing" in text:
-                    song = api.song(topic)
-                    for line in song:
-                        sleep(0.5)
-                        if line:
-                            web_client.chat_postMessage(channel=channel, text=line)
+                    send_song_response(web_client, channel, topic)
+                    # song = api.song(topic)
+                    # for line in song:
+                    # sleep(0.5)
+                    # if line:
+                    # web_client.chat_postMessage(channel=channel, text=line)
 
                 else:
                     response = api.answer_question(topic, text)
