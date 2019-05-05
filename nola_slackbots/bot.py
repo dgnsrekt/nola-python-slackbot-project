@@ -47,13 +47,14 @@ def bot_creater(*, token, bot_channel_id, bot_display_name, topic, title_line_nu
 
                 else:
                     response = api.answer_question(topic, text)
-                    title, messages = api.parse_response(
-                        response, title_line_number=title_line_number, max_characters=2000
-                    )
+                    if response:
+                        title, messages = api.parse_response(
+                            response, title_line_number=title_line_number, max_characters=2000
+                        )
 
-                    for idx, message in enumerate(messages):
-                        section = f"{title} - {idx + 1} of {len(messages)}"
-                        message_block = prep_message(title=section, message=message)
-                        web_client.chat_postMessage(channel=channel, blocks=message_block)
+                        for idx, message in enumerate(messages):
+                            section = f"{title} - {idx + 1} of {len(messages)}"
+                            message_block = prep_message(title=section, message=message)
+                            web_client.chat_postMessage(channel=channel, blocks=message_block)
 
     return slack.RTMClient(token=token)
