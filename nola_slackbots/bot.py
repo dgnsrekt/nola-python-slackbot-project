@@ -60,16 +60,9 @@ def bot_creater(*, token, bot_channel_id, bot_display_name_id, topic, title_line
 
                 if "ping" in text:
                     send_ping_message(web_client, channel, start_time=start_time)
-                    # message_block = prep_message(title="pong", message=f"{time() - start}")
-                    # web_client.chat_postMessage(channel=channel, blocks=message_block)
 
                 elif "sing" in text:
                     send_song_response(web_client, channel, topic)
-                    # song = api.song(topic)
-                    # for line in song:
-                    # sleep(0.5)
-                    # if line:
-                    # web_client.chat_postMessage(channel=channel, text=line)
 
                 else:
                     response = api.answer_question(topic, text)
@@ -82,5 +75,8 @@ def bot_creater(*, token, bot_channel_id, bot_display_name_id, topic, title_line
                             section = f"{title} - {idx + 1} of {len(messages)}"
                             message_block = prep_message(title=section, message=message)
                             web_client.chat_postMessage(channel=channel, blocks=message_block)
+
+                    else:
+                        message_block = prep_message(title="404", message="Subject Not Found.")
 
     return slack.RTMClient(token=token)
