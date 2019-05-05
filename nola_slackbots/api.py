@@ -117,11 +117,12 @@ def git_question(subtopic):
     return None
 
 
-def answer_question(topic, subtopic):  # should raise an error if not in topics
+def answer_question(topic, subtopic):  # TODO: should raise an error if not in topics or return 404
     topics = {"python": python_question, "git": git_question, "bash": bash_question}
     return topics[topic](subtopic)
 
 
+# TODO: decouple resp obj, should take a string of n lines
 def parse_response(resp, title_line_number=1, max_characters=1500):
     chunks = str()
     messages = list()
@@ -185,6 +186,6 @@ def bash_song():
     return None
 
 
-def song(topic):
+def song(topic):  # Return 404 or raise error
     songs = {"python": python_song, "git": git_song, "bash": bash_song}
     return songs[topic]()
