@@ -23,7 +23,7 @@ def payload_parser(payload):
     return web_client, rtm_client, channel, user, text
 
 
-def bot_creater(*, token, bot_channel_id, bot_display_name, topic, title_line_number):
+def bot_creater(*, token, bot_channel_id, bot_display_name_id, topic, title_line_number):
     @slack.RTMClient.run_on(event="message")
     def respond(**payload):
         start = time()
@@ -31,8 +31,8 @@ def bot_creater(*, token, bot_channel_id, bot_display_name, topic, title_line_nu
         web_client, rtm_client, channel, user, text = payload_parser(payload)
 
         if user:
-            if bot_display_name in text:
-                text = text.replace(bot_display_name, "")
+            if bot_display_name_id in text:
+                text = text.replace(bot_display_name_id, "")
 
                 if "ping" in text:
                     message_block = prep_message(title="pong", message=f"{time() - start}")
