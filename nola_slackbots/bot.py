@@ -77,6 +77,7 @@ def bot_creater(*, token, bot_channel_id, bot_display_name_id, topic, title_line
                             web_client.chat_postMessage(channel=channel, blocks=message_block)
 
                     else:
-                        message_block = prep_message(title="404", message="Subject Not Found.")
+                        message_block = prep_message(title="404", message="[Subject Not Found]")
+                        web_client.chat_postMessage(channel=channel, blocks=message_block)
 
     return slack.RTMClient(token=token)
