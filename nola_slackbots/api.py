@@ -9,9 +9,9 @@ def remove_puctuation(text):
     """Removes all punctuation from text.
 
     Args:
-        text: A string to be formatted.
+        text:str A string to be formatted.
     Returns:
-        A str with all punctuation removed.
+        str: A str with all punctuation removed.
     """
     return text.translate(str.maketrans("", "", string.punctuation))
 
@@ -20,9 +20,9 @@ def replace_spaces(text):
     """Replaces all spaces with + for a properly formatted request.
 
     Args:
-        text: A string to be formatted.
+        text:str A string to be formatted.
     Returns:
-        str with spaces replaced with +.
+        str: text with spaces replaced with +.
     """
     return text.replace(" ", "+")
 
@@ -32,9 +32,9 @@ def clean_text(text):
     Removes punctuation, replaces spaces, and lowers the text
 
     Args:
-        text: A string to be formatted.
+        text:str A string to be formatted.
     Returns:
-        str clean text
+        str: clean text
     """
     text = remove_puctuation(text)
     text = replace_spaces(text)
@@ -47,11 +47,10 @@ def prepare_request(topic, subtopic, keywords=None):
 
     Args:
         topic:str
-        subpic:str
+        subtopic:str
         keywords:{strings:strings}
-    returns:
-        str:url
-
+    Returns:
+        str: A properly formatted url.
     """
     url = "http://cheat.sh"
     subtopic = clean_text(subtopic)
@@ -62,11 +61,26 @@ def prepare_request(topic, subtopic, keywords=None):
 
 
 def prepare_reformatted_request(topic, subtopic):
+    """Prepares the url with raw arguments.
+
+    Args:
+        topic:str
+        subtopic:str
+    Returns:
+        str: A properly formatted url.
+    """
     url = "http://cheat.sh"
     return f"{url}/{topic}/{subtopic}"
 
 
 def make_request(url):
+    """Makes a http requests to the server.
+
+    Args:
+        url:str
+    Returns:
+        response obj:
+    """
     session = HTMLSession()
     return session.get(url)
 

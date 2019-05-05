@@ -11,7 +11,7 @@ rtm = bot_creater(
     token=TOKEN,
     bot_channel_id=BOT_CHANNEL_ID,
     bot_display_name=BOT_DISPLAY_NAME,
-    system=TOPIC,
+    topic=TOPIC,
     title_line_number=TITLE_LINE_NUMBER,
 )
 
