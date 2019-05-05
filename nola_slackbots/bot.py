@@ -5,13 +5,14 @@ from . import api
 import slack
 
 
-def prep_message(*, title, message):
+def prep_message(*, title, message):  # TODO: rename prepare_slack_message
+    # TODO: DRY, sep blocks for better readability
     title_block = {"type": "section", "text": {"type": "mrkdwn", "text": f"{title}"}}
     message_block = {"type": "section", "text": {"type": "mrkdwn", "text": f"```{message}```"}}
     return [title_block, message_block]
 
 
-def payload_parser(payload):
+def payload_parser(payload):  # TODO: rename parse_payload
     data = payload.get("data")
     web_client = payload.get("web_client")
     rtm_client = payload.get("rtm_client")
@@ -34,7 +35,7 @@ def remove_bot_display_name_id_from_text(bot_display_name_id, text):
     return text
 
 
-def send_ping_message(web_client, channel, start_time=time()):
+def send_ping_message(web_client, channel, start_time=time()):  # TODO: send_ping_response
     message_block = prep_message(title="PING TEST", message=f"pong, {time() - start_time}ms")
     web_client.chat_postMessage(channel=channel, blocks=message_block)
 
@@ -48,6 +49,7 @@ def send_song_response(web_client, channel, topic):
 
 
 def bot_creater(*, token, bot_channel_id, bot_display_name_id, topic, title_line_number):
+    # TODO: rename bot_creator
     @slack.RTMClient.run_on(event="message")
     def respond(**payload):
         start_time = time()  # Used for ping test.
@@ -65,13 +67,15 @@ def bot_creater(*, token, bot_channel_id, bot_display_name_id, topic, title_line
                     send_song_response(web_client, channel, topic)
 
                 else:
-                    response = api.answer_question(topic, text)
+                    response = api.answer_question(topic, text)  # TODO: rename answer
                     if response:
                         title, messages = api.parse_response(
                             response, title_line_number=title_line_number, max_characters=2000
-                        )
+                        )  # TODO: rename messages to sections
 
+                        # TODO: rename messages to sections
                         for idx, message in enumerate(messages):
+                            # TODO: rename title
                             section = f"{title} - {idx + 1} of {len(messages)}"
                             message_block = prep_message(title=section, message=message)
                             web_client.chat_postMessage(channel=channel, blocks=message_block)
