@@ -60,7 +60,7 @@ def prepare_request(topic, subtopic, keywords=None):
     return f"{url}/{topic}/{subtopic}"
 
 
-def prepare_reformatted_request(topic, subtopic):  # TODO: rename to raw request
+def prepare_raw_request(topic, subtopic):  # TODO: rename to raw request
     """Prepares the url with raw arguments.
 
     Args:
@@ -92,7 +92,7 @@ def python_question(subtopic):
         return response.html.find("pre", first=True)
 
     for req in [f"{subtopic.capitalize()}", f":{subtopic}", f":{subtopic.capitalize()}"]:
-        retry_pre_req = prepare_reformatted_request("python", req)
+        retry_pre_req = prepare_raw_request("python", req)
         response = make_request(retry_pre_req)
 
         if response.status_code == 200:
