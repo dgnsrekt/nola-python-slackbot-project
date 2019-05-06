@@ -6,35 +6,35 @@ from .keywords import PYTHON_KEYWORDS
 
 
 def remove_puctuation(text):
-    """Removes all punctuation from text.
+    """Removes punctuation from text.
 
     Args:
-        text:str A string to be formatted.
+        text:str - The text to be formatted.
     Returns:
-        str: A str with all punctuation removed.
+        str: Text with all punctuation removed.
     """
     return text.translate(str.maketrans("", "", string.punctuation))
 
 
 def replace_spaces(text):
-    """Replaces all spaces with + for a properly formatted request.
+    """Replaces spaces with '+'.
 
     Args:
-        text:str A string to be formatted.
+        text:str - The text to be formatted.
     Returns:
-        str: text with spaces replaced with +.
+        str: Text with spaces replaced with +.
     """
     return text.replace(" ", "+")
 
 
 def clean_text(text):
-    """Cleans text for properly formatted requests
-    Removes punctuation, replaces spaces, and lowers the text
+    """Clean text for request.
+    Removes punctuation, replaces spaces, and returns the text lowercase.
 
     Args:
-        text:str A string to be formatted.
+        text:str - The text to be formatted.
     Returns:
-        str: clean text
+        str: Clean lowercase text.
     """
     text = remove_puctuation(text)
     text = replace_spaces(text)
@@ -42,13 +42,13 @@ def clean_text(text):
 
 
 def prepare_request(topic, subtopic, keywords=None):
-    """Prepares the url by appending the topic and subtopic.
-    Cleans text then checks if a dictionary of keywords were provided.
+    """Appends the topic and subtopic to the url.
+    Cleans text. Checks if a dictionary of keywords were provided.
 
     Args:
-        topic:str
-        subtopic:str
-        keywords:{strings:strings}
+        topic:str - The topic. example: python
+        subtopic:str - The subtopic in the topic. example: print
+        keywords:{strings:strings} - Accepts a dictionary of common subtopic keywords.
     Returns:
         str: A properly formatted url.
     """
