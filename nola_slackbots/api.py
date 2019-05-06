@@ -1,56 +1,49 @@
 """Provides helper functions that clean, parse, and prepare text for making api requests."""
+# pylint: disable=import-error
 
 import string
-from requests_html import HTMLSession
+from requests_html import HTMLSession, HTMLResponse
 from .keywords import PYTHON_KEYWORDS
 
 
-def remove_puctuation(text):
-    """Removes punctuation from text.
+def remove_puctuation(text: str) -> str:
+    """Removes punctuation from given text.
 
-    Args:
-        text:str - The text to be formatted.
-    Returns:
-        str: Text with all punctuation removed.
+    :param text: The text to be formatted.
+    returns: Text with all punctuation removed.
     """
     return text.translate(str.maketrans("", "", string.punctuation))
 
 
-def replace_spaces(text):
-    """Replaces spaces with '+'.
+def replace_spaces(text: str) -> str:
+    """Replaces spaces with '+' in given text.
 
-    Args:
-        text:str - The text to be formatted.
-    Returns:
-        str: Text with spaces replaced with +.
+    :param text: The text to be formatted.
+    returns: Text with spaces replaced with '+'.
     """
     return text.replace(" ", "+")
 
 
-def clean_text(text):
-    """Clean text for request.
-    Removes punctuation, replaces spaces, and returns the text lowercase.
+def clean_text(text: str) -> str:
+    """Cleans text for request.
+    Removes punctuation, replaces spaces with '+', and
+    converts text to lowercase.
 
-    Args:
-        text:str - The text to be formatted.
-    Returns:
-        str: Clean lowercase text.
+    :param text: The text to be cleaned.
+    returns: Cleaned lowercase text.
     """
     text = remove_puctuation(text)
     text = replace_spaces(text)
     return text.lower()
 
 
-def prepare_request(topic, subtopic, keywords=None):
-    """Appends the topic and subtopic to the url.
-    Cleans text. Checks if a dictionary of keywords were provided.
+def prepare_request(topic: str, subtopic: str, keywords: dict = {}) -> str:
+    """Prepares a clean url with topic and subtopic.
 
-    Args:
-        topic:str - The topic. example: python
-        subtopic:str - The subtopic in the topic. example: print
-        keywords:{strings:strings} - Accepts a dictionary of common subtopic keywords.
-    Returns:
-        str: A properly formatted url.
+    :param topic: The topic to be searched. Example: python
+    :param subtopic: The subtopic in the topic. Example: print+statement
+    :param keywords: A dictionary of common subtopics.
+    returns: A formatted url.
     """
     url = "http://cheat.sh"
     subtopic = clean_text(subtopic)
@@ -60,32 +53,29 @@ def prepare_request(topic, subtopic, keywords=None):
     return f"{url}/{topic}/{subtopic}"
 
 
-def prepare_raw_request(topic, subtopic):
-    """Prepares the url with raw arguments.
+def prepare_raw_request(topic: str, subtopic: str) -> str:
+    """Prepares a raw url with topic and subtopic.
 
-    Args:
-        topic:str
-        subtopic:str
-    Returns:
-        str: A properly formatted url.
+    :param topic: The topic to be searched. Example: python
+    :param subtopic: The subtopic in the topic. Example: print+statement
+    :param keywords: A dictionary of common subtopics.
+    returns: A formatted url.
     """
     url = "http://cheat.sh"
     return f"{url}/{topic}/{subtopic}"
 
 
-def get_request(url):  # TODO: rename get_request
+def get_request(url: str) -> HTMLResponse:
     """Makes a http requests to the server.
 
-    Args:
-        url:str
-    Returns:
-        response obj:
+    :param url: The url to send the get requests.
+    returns: The html response from the server.
     """
     session = HTMLSession()
     return session.get(url)
 
 
-def python_question(subtopic):
+def python_question(subtopic: str):
     pre_request = prepare_request("python", subtopic, keywords=PYTHON_KEYWORDS)
     response = get_request(pre_request)
     if response.status_code == 200:
