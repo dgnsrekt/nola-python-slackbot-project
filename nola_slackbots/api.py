@@ -60,7 +60,7 @@ def prepare_request(topic, subtopic, keywords=None):
     return f"{url}/{topic}/{subtopic}"
 
 
-def prepare_raw_request(topic, subtopic):  # TODO: rename to raw request
+def prepare_raw_request(topic, subtopic):
     """Prepares the url with raw arguments.
 
     Args:
@@ -73,7 +73,7 @@ def prepare_raw_request(topic, subtopic):  # TODO: rename to raw request
     return f"{url}/{topic}/{subtopic}"
 
 
-def make_request(url):  # TODO: rename get_request
+def get_request(url):  # TODO: rename get_request
     """Makes a http requests to the server.
 
     Args:
@@ -87,13 +87,13 @@ def make_request(url):  # TODO: rename get_request
 
 def python_question(subtopic):
     pre_request = prepare_request("python", subtopic, keywords=PYTHON_KEYWORDS)
-    response = make_request(pre_request)
+    response = get_request(pre_request)
     if response.status_code == 200:
         return response.html.find("pre", first=True)
 
     for req in [f"{subtopic.capitalize()}", f":{subtopic}", f":{subtopic.capitalize()}"]:
         retry_pre_req = prepare_raw_request("python", req)
-        response = make_request(retry_pre_req)
+        response = get_request(retry_pre_req)
 
         if response.status_code == 200:
             return response.html.find("pre", first=True)
@@ -103,7 +103,7 @@ def python_question(subtopic):
 
 def bash_question(subtopic):
     pre_request = prepare_request("bash", subtopic)
-    response = make_request(pre_request)
+    response = get_request(pre_request)
     if response.status_code == 200:
         return response.html.find("pre", first=True)
     return None
@@ -111,7 +111,7 @@ def bash_question(subtopic):
 
 def git_question(subtopic):
     pre_request = prepare_request("git", subtopic)
-    response = make_request(pre_request)
+    response = get_request(pre_request)
     if response.status_code == 200:
         return response.html.find("pre", first=True)
     return None
@@ -158,7 +158,7 @@ def python_song():
         "https://gist.githubusercontent.com/dgnsrekt/03c49575c6c0b0aa49c84a1d70e9e735"
         "/raw/1236a06bc34f389c8d1bec6963ccdc0d470291b2/mr-python-song"
     )
-    response = make_request(url)
+    response = get_request(url)
     if response.status_code == 200:
         return response.html.full_text.split("\n")
     return None
@@ -169,7 +169,7 @@ def git_song():
         "https://gist.githubusercontent.com/dgnsrekt/3af28a1848c961c0a031287e9311f2b9"
         "/raw/ab5da67401b98ad8a713cb3680ccafdcef690e96/gitman-song"
     )
-    response = make_request(url)
+    response = get_request(url)
     if response.status_code == 200:
         return response.html.full_text.split("\n")
     return None
@@ -180,7 +180,7 @@ def bash_song():
         "https://gist.githubusercontent.com/dgnsrekt/29c630b9a2069388f5e9b3378f74a8da"
         "/raw/a23a8c25f36c1f62b2dc4a0a70689030f7516311/unix-terminator"
     )
-    response = make_request(url)
+    response = get_request(url)
     if response.status_code == 200:
         return response.html.full_text.split("\n")
     return None
