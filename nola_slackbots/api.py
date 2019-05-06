@@ -37,7 +37,7 @@ def clean_text(text: str) -> str:
     return text.lower()
 
 
-def prepare_request(topic: str, subtopic: str, keywords: dict = {}) -> str:
+def prepare_request(topic: str, subtopic: str, keywords: dict = None) -> str:
     """Prepares a clean url with topic and subtopic.
 
     :param topic: The topic to be searched. Example: python
