@@ -6,7 +6,7 @@ import string
 from typing import Optional
 
 # Project imports
-from .keywords import PYTHON_KEYWORDS
+from keywords import PYTHON_KEYWORDS
 from requests_html import HTMLSession, HTMLResponse, Element
 
 
@@ -79,56 +79,55 @@ def get_request(url: str) -> HTMLResponse:
     return session.get(url)
 
 
-def python_question(subtopic: str) -> Optional[Element]:
+def python_question(subtopic: str) -> Optional[str]:
     """Answers a question about python.
 
     :param subtopic:  A subtopic of python.
-    returns: An requests_html.Element object or None.
+    returns: The full text string of the response or None.
     """
     pre_request = prepare_request("python", subtopic, keywords=PYTHON_KEYWORDS)
     response = get_request(pre_request)
     if response.status_code == 200:
-        return response.html.find("pre", first=True)
+        return response.html.find("pre", first=True).full_text
 
     for req in [f"{subtopic.capitalize()}", f":{subtopic}", f":{subtopic.capitalize()}"]:
         retry_pre_req = prepare_raw_request("python", req)
         response = get_request(retry_pre_req)
 
         if response.status_code == 200:
-            return response.html.find("pre", first=True)
+            return response.html.find("pre", first=True).full_text
 
     return None
 
 
-def bash_question(subtopic: str) -> Optional[Element]:
+def bash_question(subtopic: str) -> Optional[str]:
     """Answers a question about bash.
 
     :param subtopic:  A subtopic of bash.
-    returns: An requests_html.Element object or None.
+    returns: The full text string of the response or None.
     """
 
     pre_request = prepare_request("bash", subtopic)
     response = get_request(pre_request)
     if response.status_code == 200:
-        return response.html.find("pre", first=True)
+        return response.html.find("pre", first=True).full_text
     return None
 
 
-def git_question(subtopic: str) -> Optional[Element]:
+def git_question(subtopic: str) -> Optional[str]:
     """Answers a question about qit.
 
     :param subtopic:  A subtopic of git.
-    returns: An requests_html.Element object or None.
+    returns: The full text string of the response or None.
     """
 
     pre_request = prepare_request("git", subtopic)
     response = get_request(pre_request)
     if response.status_code == 200:
-        return response.html.find("pre", first=True)
+        return response.html.find("pre", first=True).full_text
     return None
 
 
-# TODO: should raise an error if not in topics or return 404
 def answer_question(topic: str, subtopic: str) -> Element:
     """Helper function which blah
     """
@@ -136,19 +135,18 @@ def answer_question(topic: str, subtopic: str) -> Element:
     return topics[topic](subtopic)
 
 
-# TODO: decouple resp obj, should take a string of n lines
-def parse_response(resp, title_line_number=1, max_characters=1500):
+def parse_response(full_text_response, title_line_number=1, max_characters=1500):
     chunks = str()
     messages = list()
 
-    title = resp.full_text.split("\n")[title_line_number].strip("#").lstrip()
+    title = full_text_response.split("\n")[title_line_number].strip("#").lstrip()
 
     def is_newline_character(char):
         if char == "\n":
             return True
         return False
 
-    for char in resp.full_text:
+    for char in full_text_response:
         chunks += char
         if len(chunks) > max_characters:
             if is_newline_character(char):
