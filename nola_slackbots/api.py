@@ -6,7 +6,7 @@ import string
 from typing import Optional
 
 # Project imports
-from keywords import PYTHON_KEYWORDS
+from .keywords import PYTHON_KEYWORDS
 from requests_html import HTMLSession, HTMLResponse, Element
 
 
