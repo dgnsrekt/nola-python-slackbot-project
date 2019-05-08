@@ -1,9 +1,13 @@
-"""Provides helper functions that clean, parse, and prepare text for making api requests."""
+"""Provides helper functions that clean, parse, and prepare text for making web requests."""
 # pylint: disable=import-error
 
+# Standard Lib imports
 import string
-from requests_html import HTMLSession, HTMLResponse
-from .keywords import PYTHON_KEYWORDS
+from typing import Optional
+
+# Project imports
+from keywords import PYTHON_KEYWORDS
+from requests_html import HTMLSession, HTMLResponse, Element
 
 
 def remove_puctuation(text: str) -> str:
@@ -41,7 +45,7 @@ def prepare_request(topic: str, subtopic: str, keywords: dict = None) -> str:
     """Prepares a clean url with topic and subtopic.
 
     :param topic: The topic to be searched. Example: python
-    :param subtopic: The subtopic in the topic. Example: print+statement
+    :param subtopic: A subtopic in the topic. Example: print+statement
     :param keywords: A dictionary of common subtopics.
     returns: A formatted url.
     """
@@ -57,7 +61,7 @@ def prepare_raw_request(topic: str, subtopic: str) -> str:
     """Prepares a raw url with topic and subtopic.
 
     :param topic: The topic to be searched. Example: python
-    :param subtopic: The subtopic in the topic. Example: print+statement
+    :param subtopic: A subtopic of the topic. Example: print+statement
     :param keywords: A dictionary of common subtopics.
     returns: A formatted url.
     """
@@ -75,7 +79,12 @@ def get_request(url: str) -> HTMLResponse:
     return session.get(url)
 
 
-def python_question(subtopic: str):
+def python_question(subtopic: str) -> Optional[Element]:
+    """Answers a question about python.
+
+    :param subtopic:  A subtopic of python.
+    returns: An requests_html.Element object or None.
+    """
     pre_request = prepare_request("python", subtopic, keywords=PYTHON_KEYWORDS)
     response = get_request(pre_request)
     if response.status_code == 200:
@@ -91,7 +100,13 @@ def python_question(subtopic: str):
     return None
 
 
-def bash_question(subtopic):
+def bash_question(subtopic: str) -> Optional[Element]:
+    """Answers a question about bash.
+
+    :param subtopic:  A subtopic of bash.
+    returns: An requests_html.Element object or None.
+    """
+
     pre_request = prepare_request("bash", subtopic)
     response = get_request(pre_request)
     if response.status_code == 200:
@@ -99,7 +114,13 @@ def bash_question(subtopic):
     return None
 
 
-def git_question(subtopic):
+def git_question(subtopic: str) -> Optional[Element]:
+    """Answers a question about qit.
+
+    :param subtopic:  A subtopic of git.
+    returns: An requests_html.Element object or None.
+    """
+
     pre_request = prepare_request("git", subtopic)
     response = get_request(pre_request)
     if response.status_code == 200:
@@ -107,7 +128,10 @@ def git_question(subtopic):
     return None
 
 
-def answer_question(topic, subtopic):  # TODO: should raise an error if not in topics or return 404
+# TODO: should raise an error if not in topics or return 404
+def answer_question(topic: str, subtopic: str) -> Element:
+    """Helper function which blah
+    """
     topics = {"python": python_question, "git": git_question, "bash": bash_question}
     return topics[topic](subtopic)
 
