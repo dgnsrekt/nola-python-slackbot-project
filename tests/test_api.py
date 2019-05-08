@@ -57,8 +57,25 @@ def test_get_request():
     assert response.text.split("\n")[0] == "<!DOCTYPE html>"
 
 
-# @pytest.mark.online
-# def test_python_question():
-#     t_topic = "python"
-#     t_subtopic = "classes"
-#     t_results = python_question(t_subtopic)
+@pytest.mark.online
+def test_python_question():
+    t_subtopic = "classes"
+    t_results = python_question(t_subtopic).split("\n")[1]
+    assert isinstance(t_results, str)  # Should return a string.
+    assert t_results == "# We subclass from object to get a class."
+
+
+@pytest.mark.online
+def test_bash_question():
+    t_subtopic = "fork bomb"
+    t_results = bash_question(t_subtopic).split("\n")[1]
+    assert isinstance(t_results, str)  # Should return a string.
+    assert t_results == "# unix - How does this bash fork bomb work?"
+
+
+@pytest.mark.online
+def test_git_question():
+    t_subtopic = "merge"
+    t_results = git_question(t_subtopic).split("\n")[2]
+    assert isinstance(t_results, str)  # Should return a string.
+    assert t_results == " * How to selectively merge or pick changes from another branch in ..."
