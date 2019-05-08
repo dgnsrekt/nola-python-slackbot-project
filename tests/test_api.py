@@ -1,5 +1,6 @@
 from nola_slackbots.api import remove_puctuation, replace_spaces, clean_text
 from nola_slackbots.api import get_request, prepare_request, prepare_raw_request
+from nola_slackbots.api import python_question, bash_question, git_question
 import pytest
 
 
@@ -26,26 +27,26 @@ def test_clean_text():
 
 def test_prepare_request():
     t_topic = "python"
-    t_subtpic = "Classes"
+    t_subtopic = "Classes"
     t_expected = "http://cheat.sh/python/classes"
-    t_results = prepare_request(t_topic, t_subtpic)
+    t_results = prepare_request(t_topic, t_subtopic)
     assert t_expected == t_results
 
 
 def test_prepare_request_with_keywords():
     t_keywords = {"class": "Classes", "classes": "Classes"}
     t_topic = "python"
-    t_subtpic = "classes"
+    t_subtopic = "classes"
     t_expected = "http://cheat.sh/python/Classes"
-    t_results = prepare_request(t_topic, t_subtpic, t_keywords)
+    t_results = prepare_request(t_topic, t_subtopic, t_keywords)
     assert t_expected == t_results
 
 
 def test_prepare_raw_request():
     t_topic = "python"
-    t_subtpic = "Classes"
+    t_subtopic = "Classes"
     t_expected = "http://cheat.sh/python/Classes"
-    t_results = prepare_raw_request(t_topic, t_subtpic)
+    t_results = prepare_raw_request(t_topic, t_subtopic)
     assert t_expected == t_results
 
 
@@ -54,3 +55,10 @@ def test_get_request():
     url = "https://httpbin.org"
     response = get_request(url)
     assert response.text.split("\n")[0] == "<!DOCTYPE html>"
+
+
+# @pytest.mark.online
+# def test_python_question():
+#     t_topic = "python"
+#     t_subtopic = "classes"
+#     t_results = python_question(t_subtopic)
