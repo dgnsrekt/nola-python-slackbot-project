@@ -1,5 +1,5 @@
 from nola_slackbots.api import remove_puctuation, replace_spaces, clean_text
-from nola_slackbots.api import get_request, prepare_request, prepare_raw_request
+from nola_slackbots.api import send_request, prepare_request, prepare_raw_request
 from nola_slackbots.api import python_question, bash_question, git_question
 import pytest
 
@@ -51,9 +51,9 @@ def test_prepare_raw_request():
 
 
 @pytest.mark.online
-def test_get_request():
+def test_send_request():
     url = "https://httpbin.org"
-    response = get_request(url)
+    response = send_request(url)
     assert response.text.split("\n")[0] == "<!DOCTYPE html>"
 
 
